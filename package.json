@@ -1,0 +1,24 @@
+{
+  "name": "tests_clontagram",
+  "version": "1.0.0",
+  "description": "UI automation testing for clontagram.com",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Appdelante/tests_clontagram.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Appdelante/tests_clontagram/issues"
+  },
+  "homepage": "https://github.com/Appdelante/tests_clontagram#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "jest": "^26.6.3",
+    "puppeteer": "^3.3.0"
+  }
+}
