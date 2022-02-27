@@ -4,13 +4,13 @@ const USERNAME_SELECTOR = 'form > input[name="username"]';
 const BIO_SELECTOR = 'form > input[name="bio"]';
 const PASSWORD_SELECTOR = 'form > input[name="password"]';
 const SUBMIT_BUTTON_SELECTOR = 'form > button[type="submit"]';
-const BOX_ERROR_SELECTOR = "div[class='ErrorContainer']";
+const BasePage = require("./basePage");
 const FeedPage = require("./feedPage");
 
 //Page Object Model (POM)
-class SignUpPage {
+class SignUpPage extends BasePage {
   constructor(page) {
-    this.page = page;
+    super(page); //llamamos al constructor de la clase padre (BasePage)
   }
 
   async fillForm(user) {
@@ -32,12 +32,6 @@ class SignUpPage {
     const signUpButton = await this.page.$(SUBMIT_BUTTON_SELECTOR);
     await signUpButton.click();
     return new FeedPage(this.page);
-  }
-
-  async checkErrorDisplayed() {
-    await this.page.waitForSelector(BOX_ERROR_SELECTOR, {
-      visible: true,
-    });
   }
 }
 

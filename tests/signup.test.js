@@ -1,5 +1,5 @@
-const puppeteer = require("puppeteer");
 const { generateUser } = require("../dataGenerator");
+const { makePage } = require("../pages/pages");
 const { SIGNUP_URL } = require("../config/urls");
 const SignUpPage = require("../pages/signUpPage");
 const TIMEOUT_INITIALIZE_BROWSER = 15000;
@@ -14,21 +14,26 @@ const USER_WITH_USERNAME_REGISTERED = {
   username: "test",
 };
 
-let browser, page, signUpPage;
+let context, signUpPage;
 beforeEach(async () => {
-  browser = await puppeteer.launch({ headless: false });
-  page = await browser.newPage();
+  /*  browser = await puppeteer.launch({ headless: false });
+  page = await browser.newPage(); */
 
-  await page.goto(SIGNUP_URL, {
+  /*  await page.goto(SIGNUP_URL, {
     timeout: 15000,
     waitUntil: "networkidle0",
-  });
-
-  signUpPage = new SignUpPage(page);
+  }); */
+  const pageConfig = {
+    url: SIGNUP_URL,
+    browserConfig: { headless: true },
+  };
+  context = await makePage(pageConfig);
+  signUpPage = new SignUpPage(context.page);
 }, TIMEOUT_INITIALIZE_BROWSER);
 
 afterEach(async () => {
-  await browser.close();
+  // await browser.close();
+  await context.browser.close();
 });
 
 describe("Sign Up de Clontagram", () => {
@@ -46,7 +51,7 @@ describe("Sign Up de Clontagram", () => {
     await signUpPage.fillForm(user);
     const feedPage = await signUpPage.clickSignUp();
     await feedPage.checkEmptyFeed();
-  });
+  }, 15000); //Aumento el timeout para que se ejecute antes de que falle
 
   test("Debe mostrar un error cuando el email ya está registrado", async () => {
     await signUpPage.fillForm(USER_WITH_EMAIL_REGISTERED);
