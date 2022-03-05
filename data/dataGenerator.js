@@ -1,7 +1,11 @@
 const crypto = require("crypto");
 
+const generateRandomString = () => {
+  return crypto.randomBytes(12).toString("hex");
+};
+
 const generateUser = () => {
-  const username = `test${crypto.randomBytes(12).toString("hex")}`; //Generar data random. hex para que el username sea alfanúmerico
+  const username = `test${generateRandomString()}`; //Generar data random. hex para que el username sea alfanúmerico
 
   return {
     email: `${username}@gmail.com`,
@@ -13,5 +17,6 @@ const generateUser = () => {
 };
 
 module.exports = {
+  generateRandomString,
   generateUser,
 };

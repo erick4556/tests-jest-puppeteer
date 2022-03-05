@@ -1,4 +1,4 @@
-const { generateUser } = require("../dataGenerator");
+const { generateUser } = require("../data/dataGenerator");
 const { makePage } = require("../pages/pages");
 const { SIGNUP_URL } = require("../config/urls");
 const SignUpPage = require("../pages/signUpPage");
