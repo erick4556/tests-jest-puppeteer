@@ -1,21 +1,20 @@
 const path = require("path");
-const { makePage } = require("../pages/pages");
+const { makePageForAuth } = require("../pages/pages");
 const { cameraIconClick } = require("../pages/navigationBar");
 const { generateRandomString } = require("../data/dataGenerator");
-const { SIGNIN_URL } = require("../config/urls");
+const { BASE_URL } = require("../config/urls");
 const { VALID_CREDENTIALS } = require("../data/credentials");
-const SignInPage = require("../pages/signInPage");
 const TIMEOUT_INITIALIZE_BROWSER = 15000;
 const PATH_IMAGE_UPLOAD = path.join(__dirname, "../data/images/restaurant.jpg");
 
-let context, signInPage;
+let context;
 beforeEach(async () => {
   const pageConfig = {
-    url: SIGNIN_URL,
+    url: BASE_URL,
+    credentials: VALID_CREDENTIALS,
     browserConfig: { headless: false }, //slowMo: 30, para correr mas lento el test
   };
-  context = await makePage(pageConfig);
-  signInPage = new SignInPage(context.page);
+  context = await makePageForAuth(pageConfig);
 }, TIMEOUT_INITIALIZE_BROWSER);
 
 afterEach(async () => {
@@ -25,16 +24,12 @@ afterEach(async () => {
 
 describe("Upload de Clontagram", () => {
   test("Hacer click en el icono de cámara, debe llevar el usuario a la página de upload", async () => {
-    await signInPage.fillSignInForm(VALID_CREDENTIALS);
-    await signInPage.clickSignIn();
     const uploadPage = await cameraIconClick(context.page);
     await uploadPage.checkCorrectUploadPage();
   });
 
   test("Subir una imagen debe llevar al usuario al feed donde su post es mostrado", async () => {
     const randomCaption = generateRandomString();
-    await signInPage.fillSignInForm(VALID_CREDENTIALS);
-    await signInPage.clickSignIn();
     const uploadPage = await cameraIconClick(context.page);
     //Poner el caption
     await uploadPage.fillCaption(randomCaption);
