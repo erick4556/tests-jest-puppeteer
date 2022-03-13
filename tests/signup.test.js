@@ -2,7 +2,6 @@ const { generateUser } = require("../data/dataGenerator");
 const { makePage } = require("../pages/pages");
 const { SIGNUP_URL } = require("../config/urls");
 const SignUpPage = require("../pages/signUpPage");
-const TIMEOUT_INITIALIZE_BROWSER = 15000;
 
 const USER_WITH_EMAIL_REGISTERED = {
   ...generateUser(),
@@ -25,11 +24,10 @@ beforeEach(async () => {
   }); */
   const pageConfig = {
     url: SIGNUP_URL,
-    browserConfig: { headless: true },
   };
   context = await makePage(pageConfig);
   signUpPage = new SignUpPage(context.page);
-}, TIMEOUT_INITIALIZE_BROWSER);
+}, __TIMEOUT_INITIALIZE_BROWSER__);
 
 afterEach(async () => {
   // await browser.close();
@@ -51,7 +49,7 @@ describe("Sign Up de Clontagram", () => {
     await signUpPage.fillForm(user);
     const feedPage = await signUpPage.clickSignUp();
     await feedPage.checkEmptyFeed();
-  }, 15000); //Aumento el timeout para que se ejecute antes de que falle
+  }); //Aumento el timeout para que se ejecute antes de que falle
 
   test("Debe mostrar un error cuando el email ya está registrado", async () => {
     await signUpPage.fillForm(USER_WITH_EMAIL_REGISTERED);

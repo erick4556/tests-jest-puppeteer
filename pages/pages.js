@@ -4,7 +4,7 @@ const getTokenAndAuthData = require("../auth/auth.js");
 
 const makePage = async ({
   url,
-  browserConfig = { headless: true },
+  browserConfig = __BROWSER_CONFIG__,
   pageConfig = {
     timeout: 15000,
     waitUntil: "networkidle0",
@@ -12,6 +12,10 @@ const makePage = async ({
 }) => {
   const browser = await puppeteer.launch(browserConfig);
   const page = await browser.newPage();
+
+  if (__MOBILE_DEVICE__) {
+    await page.emulate(__MOBILE_DEVICE__);
+  }
 
   await page.goto(url, pageConfig);
 
@@ -24,7 +28,7 @@ const makePage = async ({
 const makePageForAuth = async ({
   url,
   credentials,
-  browserConfig = { headless: true },
+  browserConfig = __BROWSER_CONFIG__,
   pageConfig = {
     timeout: 15000,
     waitUntil: "networkidle0",
@@ -32,6 +36,10 @@ const makePageForAuth = async ({
 }) => {
   const browser = await puppeteer.launch(browserConfig);
   const page = await browser.newPage();
+
+  if (__MOBILE_DEVICE__) {
+    await page.emulate(__MOBILE_DEVICE__);
+  }
 
   await page.goto(SIGNIN_URL, pageConfig);
 

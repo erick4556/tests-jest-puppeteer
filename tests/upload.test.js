@@ -4,7 +4,6 @@ const { cameraIconClick } = require("../pages/navigationBar");
 const { generateRandomString } = require("../data/dataGenerator");
 const { BASE_URL } = require("../config/urls");
 const { VALID_CREDENTIALS } = require("../data/credentials");
-const TIMEOUT_INITIALIZE_BROWSER = 15000;
 const PATH_IMAGE_UPLOAD = path.join(__dirname, "../data/images/restaurant.jpg");
 
 let context;
@@ -12,10 +11,9 @@ beforeEach(async () => {
   const pageConfig = {
     url: BASE_URL,
     credentials: VALID_CREDENTIALS,
-    browserConfig: { headless: false }, //slowMo: 30, para correr mas lento el test
   };
   context = await makePageForAuth(pageConfig);
-}, TIMEOUT_INITIALIZE_BROWSER);
+}, __TIMEOUT_INITIALIZE_BROWSER__);
 
 afterEach(async () => {
   // await browser.close();

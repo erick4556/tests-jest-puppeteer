@@ -4,7 +4,9 @@
   "description": "UI automation testing for clontagram.com",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test-desktop": "jest --config=test-config/desktop.js",
+    "test-mobile": "jest --config=test-config/mobile.js"
   },
   "repository": {
     "type": "git",

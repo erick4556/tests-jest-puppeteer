@@ -6,17 +6,15 @@ const {
   DONT_FOLLOW_ANYONE_AND_NO_PHOTOS_UPLOADED_CREDENTIALS,
 } = require("../data/credentials");
 const SignInPage = require("../pages/signInPage");
-const TIMEOUT_INITIALIZE_BROWSER = 15000;
 
 let context, signInPage;
 beforeEach(async () => {
   const pageConfig = {
     url: SIGNIN_URL,
-    browserConfig: { headless: true },
   };
   context = await makePage(pageConfig);
   signInPage = new SignInPage(context.page);
-}, TIMEOUT_INITIALIZE_BROWSER);
+}, __TIMEOUT_INITIALIZE_BROWSER__);
 
 afterEach(async () => {
   // await browser.close();

@@ -3,21 +3,16 @@ const { generateRandomString } = require("../data/dataGenerator");
 const { POST_URL_EXIST } = require("../config/urls");
 const { USER_FOR_TESTING_POST_CREDENTIALS } = require("../data/credentials");
 const PostPage = require("../pages/postPage");
-const TIMEOUT_INITIALIZE_BROWSER = 15000;
 
 let context, postPage;
 beforeEach(async () => {
   const pageConfig = {
     url: POST_URL_EXIST,
     credentials: USER_FOR_TESTING_POST_CREDENTIALS,
-    browserConfig: {
-      headless: false,
-      defaultViewport: { width: 1600, height: 1000 },
-    }, //slowMo: 30, para correr mas lento el test. defaulViewport para editar el tamaño de la pantalla
   };
   context = await makePageForAuth(pageConfig);
   postPage = new PostPage(context.page);
-}, TIMEOUT_INITIALIZE_BROWSER);
+}, __TIMEOUT_INITIALIZE_BROWSER__);
 
 afterEach(async () => {
   // await browser.close();
@@ -37,7 +32,7 @@ describe("Vista post de Clontagram", () => {
       postPage.waitForStateLikeChange(),
       postPage.clickLike(),
     ]);
-  }, 20000);
+  });
 
   test("Puedo dejar un comentario en un post", async () => {
     const randomString = generateRandomString();
